@@ -32,6 +32,18 @@ answerer
     <form>
         <input type="text" placeholder="answer the question" name="answer"/>
         <input type="submit" value="answer"/>
+        {{#case answerState="idle"}}
+        idle
+        {{/case}}
+        {{#case answerState="error"}}
+        error
+        {{/case}}
+        {{#case answerState="done"}}
+        done
+        {{/case}}
+        {{#case answerState="progress"}}
+        progress
+        {{/case}}
     </form>
 </template>
 

@@ -1,4 +1,5 @@
 if (Meteor.isClient) {
+    answerState = new ReactiveVar("idle");
     Router.route('/', function(){
         this.render("create");
     });
@@ -19,13 +20,24 @@ if (Meteor.isClient) {
     Template.answerer.events({
         "submit form": function(e){
             e.preventDefault();
+            if(answerState.get() == "progress"){
+                return;
+            }
+            answerState.set("progress");
             var answer = e.target.answer.value;
+            answerState.set("progress");
             Meteor.call('post', this.publicId, answer, function(err, id){
                 if(err){
+                    answerState.set("error");
                     //TOOD: show error
                     console.log("failed to answer", err);
-                    return;
+                } else {
+                    answerState.set("done");
                 }
+                Meteor.setTimeout(function(){
+                    e.target.answer.value = "";
+                    answerState.set("idle");
+                }, 1000);
                 //Router.go('/' + id)
             });
         }
