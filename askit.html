@@ -1,5 +1,5 @@
 <head>
-  <title>askit</title>
+  <title>TellMe</title>
 </head>
 
 <body>
@@ -8,14 +8,35 @@
 <template name="create">
     <form>
         <input type="text" placeholder="Ask a question" name="question"/>
-        <button type="submit"> create </button>
+        <input type="submit" value="create"/>
     </form>
 </template>
 
-<template name="owner">
+<template name="questioner">
+questioner
+<br>
+ask url <a href="{{publicUrl}}">{{publicUrl}}</a>
+<br>
+<ul>
+    {{#each answers}}
+    <li> {{ this }} </li>
+    {{/each}}
+</ul>
 </template>
-<template name="asker">
 
+<template name="answerer">
+answerer
+
+{{question}}
+<br>
+    <form>
+        <input type="text" placeholder="answer the question" name="answer"/>
+        <input type="submit" value="answer"/>
+    </form>
+</template>
+
+<template name="loading">
+loading
 </template>
 
 
