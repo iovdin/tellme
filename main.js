@@ -55,6 +55,29 @@ if (Meteor.isClient) {
             });
         }
     });
+
+    // this lines has to be last lines in the file
+    _.chain(this).pairs().filter(function(pair){
+        return (pair[1] instanceof ReactiveVar);
+    }).each(function(pair){
+        Template.registerHelper(pair[0], function(){
+            return pair[1].get();
+        });
+    });
+
+    Template.registerHelper("case", function(){
+        var pair =_.chain(this).pairs().first().value();
+        //console.log("case pair", pair);
+        var rvar = window[pair[0]];
+        if(!rvar){
+            //console.log("create var ", pair[0]);
+            rvar = window[pair[0]] = new ReactiveVar("default");
+        }
+        if(rvar instanceof ReactiveVar && rvar.get().toString() == pair[1]) {
+            return Template._case_default;
+        }
+        return null;
+    });
 }
 
 questions = new Mongo.Collection("questions");
