@@ -5,46 +5,60 @@
 <body>
 </body>
 
+<template name="MainLayout">
+    <div fit horizontal center-justified layout center>
+        {{> yield }}
+    </div>
+</template>
+
 <template name="create">
-    <form>
-        <input type="text" placeholder="Ask a question" name="question"/>
-        <input type="submit" value="create"/>
-    </form>
+    <div vertical layout center>
+        <form style="align_right">
+            <div class="input"></div>
+            <textarea type="text" rows="auto" placeholder="What is your question?" name="question"></textarea><br>
+            <button type="submit" style="float: right">Ask</button>
+        </form>
+    </div>
 </template>
 
 <template name="questioner">
-questioner
-<br>
-ask url <a href="{{publicUrl}}">{{publicUrl}}</a>
-<br>
-<ul>
-    {{#each answers}}
-    <li> {{ this }} </li>
-    {{/each}}
-</ul>
+    <div style="widht: 100%; height: 100%; overflow-y: auto;">
+        <div style="width: 100%; margin: 100px auto;" class="align_center">
+            <h1>{{question}}</h1>
+            <span class="font_20px">Question link <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
+            {{#if answers}}
+                <ol reversed style="width: 500px">
+                    {{#each answers}}
+                        <li style="margin: 40px 0px; padding:0;" class="align_left"> {{ this }} </li>
+                    {{/each}}
+                </ol>
+            {{else}}
+            <h2 class="comment">Answers will appear here</h2>
+            {{/if}}
+        </div>
+    </div>
 </template>
 
 <template name="answerer">
-answerer
-
-{{question}}
-<br>
-    <form>
-        <input type="text" placeholder="answer the question" name="answer"/>
-        <input type="submit" value="answer"/>
-        {{#case answerState="idle"}}
-        idle
-        {{/case}}
-        {{#case answerState="error"}}
-        error
-        {{/case}}
-        {{#case answerState="done"}}
-        done
-        {{/case}}
-        {{#case answerState="progress"}}
-        progress
-        {{/case}}
-    </form>
+    <div vertical layout center>
+        <h1>{{question}}</h1><br>
+        <form class="align_center">
+            {{#case answerState="idle"}}
+                <textarea type="text" placeholder="Type answer here" name="answer"></textarea><br>
+                <button type="submit" style="float: right">Submit</button>
+            {{/case}}
+            {{#case answerState="error"}}
+                error
+            {{/case}}
+            {{#case answerState="done"}}
+                <img src="img/done.png" width="80px">
+                <h2 class="comment align_center">Thank you! You answer<br>has been submitted</h2>
+            {{/case}}
+            {{#case answerState="progress"}}
+                progress
+            {{/case}}
+        </form>
+    </div>
 </template>
 
 <template name="loading">

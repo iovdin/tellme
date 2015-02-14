@@ -3,6 +3,9 @@ if (Meteor.isClient) {
     Router.route('/', function(){
         this.render("create");
     });
+    Router.configure({
+        layoutTemplate: 'MainLayout'
+    });
     Template.create.events({
         "submit form" : function(e){
             e.preventDefault();
@@ -56,6 +59,7 @@ if (Meteor.isClient) {
                 data : {
                     answers : question.answers,
                     publicUrl : Meteor.absoluteUrl(question.publicId),
+                    question : question.question,
                 }
             });
         } else {
