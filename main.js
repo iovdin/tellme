@@ -3,9 +3,11 @@ if (Meteor.isClient) {
     sitename = "tellmet.ru";
     title = new ReactiveVar(sitename);
     description = new ReactiveVar("Ask a question to get anonymous answers");
+
     Router.route('/', function(){
         this.render("create");
     });
+
     Router.configure({
         layoutTemplate: 'MainLayout',
         onAfterAction : function(){
@@ -26,7 +28,8 @@ if (Meteor.isClient) {
         "submit form" : function(e){
             e.preventDefault();
             var question = e.target.question.value;
-            Meteor.call('create', question, false, function(err, id){
+            var answersArePublic = e.target.answersArePublic.checked;
+            Meteor.call('create', question, answersArePublic, function(err, id){
                 if(err){
                     //TOOD: show error
                     console.log("failed to create question", err);
@@ -42,7 +45,6 @@ if (Meteor.isClient) {
             if(answerState.get() == "progress"){
                 return;
             }
-            answerState.set("progress");
             var answer = e.target.answer.value;
             answerState.set("progress");
             var data = this;
@@ -55,13 +57,11 @@ if (Meteor.isClient) {
                     answerState.set("done");
                 }
                 Meteor.setTimeout(function(){
-                    //answerState.set("idle");
-                    console.log("this", data);
                     if(data.answersArePublic){
+                        answerState.set("idle");
                         Router.go("/" + data.publicId + "/answers")
-                    }
+                    } 
                 }, 1000);
-                //Router.go('/' + id)
             });
         }
     })
@@ -103,6 +103,8 @@ if (Meteor.isClient) {
                 }
             });
         } else {
+            title.set(sitename + " - answer anonymously");
+            description.set(question.question);
             this.render("answerer", { 
                 data : {
                     question : question.question,
@@ -110,8 +112,6 @@ if (Meteor.isClient) {
                     answersArePublic : question.answersArePublic
                 }
             });
-            title.set(sitename + " - answer anonymously");
-            description.set(question.question);
         }
     });
 
@@ -139,14 +139,12 @@ if (Meteor.isClient) {
     Template.create.events({
         "focus textarea" : function(event){
             event.preventDefault();
-            console.log("focus works!")
             $('body').removeClass("lighter");
             $('body').addClass("darker");
             $('textarea').attr('placeholder', 'To get anonymous answers')
         },
         "blur textarea" : function(event){
             event.preventDefault();
-            console.log("blur works!")
             $('body').removeClass("darker");
             $('body').addClass("lighter");
             $('textarea').attr('placeholder', 'Type your question here')
@@ -156,14 +154,12 @@ if (Meteor.isClient) {
     Template.answerer.events({
         "focus textarea" : function(event){
             event.preventDefault();
-            console.log("focus works!")
             $('body').removeClass("lighter");
             $('body').addClass("darker");
             //$('textarea').attr('placeholder', 'To get anonymous answers')
         },
         "blur textarea" : function(event){
             event.preventDefault();
-            console.log("blur works!")
             $('body').removeClass("darker");
             $('body').addClass("lighter");
             //$('textarea').attr('placeholder', 'Type your question here')
