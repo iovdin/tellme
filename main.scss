@@ -80,23 +80,11 @@ textarea {
     //border-radius: 8px;
     font-size: 24px;
     resize: none;
+    background: none;
 }
-
-.input {
-    min-width: 40px;
-    width: auto;
-    display: inline;
-    border-bottom: 2px solid $grey;
-    margin: 0px;
-    padding: 0px;
-    background-color: transparent;
-    font-weight: 300;
-    color: $grey;
-}
-.input:focus {
-    box-shadow: 0px 8px 15px 0px rgba(0,0,0,0.18);
+textarea:focus {
     outline: none;
-    //@include user-select(element);
+    color: #fff;
 }
 
 button {
@@ -104,7 +92,8 @@ button {
     color: $blue;
     font-size: 24px;
     font-weight: 300;
-    background-color: #fff;
+    background: none;
+    //background-color: #fff;
     padding: 7px 25px 10px 25px;
     border: 2px solid $blue;
     border-radius: 35px;
