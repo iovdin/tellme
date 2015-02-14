@@ -4,9 +4,8 @@ if (Meteor.isClient) {
     title = new ReactiveVar(sitename);
     description = new ReactiveVar("Ask a question to get anonymous answers");
 
-    Router.route('/', function(){
-        this.render("create");
-    });
+    Session.setDefaultPersistent("myquestions", []);
+
 
     Router.configure({
         layoutTemplate: 'MainLayout',
@@ -24,6 +23,27 @@ if (Meteor.isClient) {
         }
     });
 
+    Router.route('/', function(){
+        this.render("create", { data : {
+            myquestions : function(){
+                return Session.get("myquestions");
+            }
+        }});
+    });
+    Router.route('/myquestions', function(){
+        this.wait(Meteor.subscribe('myquestions', Session.get("myquestions")));
+        if (!this.ready()) {
+            this.render('loading');
+            return
+        }
+
+        this.render("myquestions", { 
+            data : { 
+                questions : questions.find()
+            }
+        });
+    });
+
     Template.create.events({
         "submit form" : function(e){
             e.preventDefault();
@@ -35,6 +55,9 @@ if (Meteor.isClient) {
                     console.log("failed to create question", err);
                     return;
                 }
+                var q = Session.get("myquestions");
+                q.push(id)
+                Session.setPersistent("myquestions", q);
                 Router.go('/' + id)
             });
         }
@@ -182,6 +205,9 @@ if (Meteor.isServer) {
                 fields.answers = 1;
             }
             return questions.find({publicId : id}, {fields : fields });
+        });
+        Meteor.publish("myquestions", function(ids){
+            return questions.find({privateId : {$in : ids}}, {fields : {privateId : 1, publicId : 1, answers : 1, question : 1}});
         });
     });
     Meteor.methods({

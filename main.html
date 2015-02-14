@@ -27,6 +27,9 @@
 </template>
 
 <template name="create">
+{{#if myquestions}}
+    <a href="/myquestions">My Questions</a>
+{{/if}}
     <form style="width: 500px; margin: 0 auto;">
         <textarea type="text" rows="1" placeholder="Type your question here" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
         <div style="float: left; margin-top: 30px;">
@@ -107,6 +110,13 @@ loading
 
 <template name="access_denied">
 Viewing answers is not permitted
+</template>
+
+<template name="myquestions">
+My Questions:
+    {{#each questions}}
+    <li style="margin: 60px 0px; padding:0;" class="align_left"> <a href="/{{privateId}}">{{ question }} </a> </li>
+    {{/each}}
 </template>
 
 
