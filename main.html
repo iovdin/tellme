@@ -29,8 +29,11 @@
 <template name="create">
     <form style="width: 500px; margin: 0 auto;">
         <textarea type="text" rows="1" placeholder="Type your question here" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
-        <div style="float: left; margin-top: 30px; color: rgba(255, 255, 255, 0.5)" class="font_20px">
-            <input type="checkbox" value="true"/>Everyone can see answers after reply</div>
+        <div style="float: left; margin-top: 30px;">
+            <input type="checkbox" id="checkbox"/>
+            <label for="checkbox" class="checkbox"> </label>
+            <label for="checkbox" style="color: rgba(255, 255, 255, 0.5)" class="font_20px">Everyone can see answers after reply</label>
+        </div>
         <button type="submit" style="float: right">Ask</button>
     </form>
 </template>
@@ -47,7 +50,7 @@
 }(document, 'script', 'facebook-jssdk'));</script>
     <h1>{{question}}</h1>
     <span class="font_20px">Share the question: <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
-    <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div> to get answers
+    <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
     {{#if answers}}
         <ol reversed style="width: 500px; margin: 0 auto;">
             {{#each answers}}

@@ -109,6 +109,39 @@ button:hover {
     color: #fff;
 }
 
+input[type=checkbox] {
+   position: absolute;
+   top: -9999px;
+   left: -9999px;
+}
+label { 
+  //-webkit-appearance: push-button;
+  //-moz-appearance: button; 
+  //display: inline-block;
+  //margin: 60px 0 10px 0;
+  cursor: pointer;
+}
+
+/* Default State */
+label.checkbox {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: none;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    margin: 0 4px -2px 0;
+}
+
+/* Toggled State */
+input[type=checkbox]:checked ~ label.checkbox {
+    //background: red;
+    background-image: url(img/checked.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 90% auto;
+}
+
 input[type="checkbox"] {
     display:inline-block;
     background: transparent;
@@ -141,4 +174,8 @@ input[type="checkbox"]:checked + label span {
 @include keyframes(fadeOut) {
     from {background: rgba(52, 58, 65, 0.5);}
     to {background: #fff;}
+}
+
+.fb-share-button {
+    margin-left: 40px;
 }
