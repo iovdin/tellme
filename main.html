@@ -1,7 +1,6 @@
 <head>
-    <title>Tell Me True</title>
+    <title>tellmet.ru</title>
     <link rel="icon" type="image/png" href="img/favicon.png">
-    
     <script type="text/javascript">
         function AutoGrowTextArea(textField) {
             if (textField.clientHeight < textField.scrollHeight) {
@@ -29,14 +28,25 @@
 
 <template name="create">
     <form style="width: 500px; margin: 0 auto;">
+        {{description}}
         <textarea type="text" rows="1" placeholder="What is your question?" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
         <button type="submit" style="float: right">Ask</button>
     </form>
 </template>
 
 <template name="questioner">
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1586015348309962&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
     <h1>{{question}}</h1>
-    <span class="font_20px">Question link <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
+    <span class="font_20px">Share the link <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
+    <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div> to get answers
     {{#if answers}}
         <ol reversed style="width: 500px; margin: 0 auto;">
             {{#each answers}}
@@ -57,7 +67,7 @@
                       placeholder="Type answer here and be honest, it's anonymous" 
                       name="answer" 
                       onkeyup="AutoGrowTextArea(this)"></textarea><br>
-            <button type="submit" style="float: right">Submit</button>
+            <button type="submit" style="float: right">Submit Anonymously</button>
         {{/case}}
         {{#case answerState="error"}}
             error

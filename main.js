@@ -1,11 +1,27 @@
 if (Meteor.isClient) {
     answerState = new ReactiveVar("idle");
+    sitename = "tellmet.ru";
+    title = new ReactiveVar(sitename);
+    description = new ReactiveVar("Ask a question to get anonymous answers");
     Router.route('/', function(){
         this.render("create");
     });
     Router.configure({
-        layoutTemplate: 'MainLayout'
+        layoutTemplate: 'MainLayout',
+        onAfterAction : function(){
+            SEO.set({
+                title: title.get(),
+                meta: {
+                    'description': description.get()
+                },
+                og: {
+                    'title': title.get(),
+                'description': description.get()
+                }
+            });
+        }
     });
+
     Template.create.events({
         "submit form" : function(e){
             e.preventDefault();
@@ -69,6 +85,7 @@ if (Meteor.isClient) {
                     publicId : this.params._id
                 }
             });
+            title.set(sitename + " - " + question.question);
         }
     });
 
