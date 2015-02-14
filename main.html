@@ -30,9 +30,9 @@
     <form style="width: 500px; margin: 0 auto;">
         <textarea type="text" rows="1" placeholder="Type your question here" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
         <div style="float: left; margin-top: 30px;">
-            <input type="checkbox" id="checkbox"/>
+            <input type="checkbox" id="checkbox" name="answersArePublic"/>
             <label for="checkbox" class="checkbox"> </label>
-            <label for="checkbox" style="color: rgba(255, 255, 255, 0.5)" class="font_20px">Everyone can see answers after reply</label>
+            <label for="checkbox" style="color: rgba(255, 255, 255, 0.5)" class="font_20px" >Everyone can see answers after reply</label>
         </div>
         <button type="submit" style="float: right">Ask</button>
     </form>
@@ -71,6 +71,11 @@
                       placeholder="Answer here. Be honest. You are anonymous" 
                       name="answer" 
                       onkeyup="AutoGrowTextArea(this)"></textarea><br>
+            {{#if answersArePublic}}
+                Your answer is visible to everyone
+            {{else}}
+                Your answer is only visible to person that asked
+            {{/if}}
             <button type="submit" style="float: right">Submit</button>
         {{/case}}
         {{#case answerState="error"}}
@@ -79,16 +84,6 @@
         {{#case answerState="done"}}
             <img src="img/done.png" width="80px">
             <h2 class="comment align_center">Thank you! You answer<br>has been submitted</h2>
-        {{/case}}
-        {{#case answerState="done"}}
-            <h1>{{question}}</h1>
-            {{#if answers}}
-            <ol reversed style="width: 500px; margin: 0 auto;">
-                {{#each answers}}
-                    <li style="margin: 60px 0px; padding:0;" class="align_left"> {{ this }} </li>
-                {{/each}}
-            </ol>
-            {{/if}}
         {{/case}}
         {{#case answerState="progress"}}
             progress
