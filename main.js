@@ -193,7 +193,7 @@ if (Meteor.isServer) {
                 question : question ,
                 publicId : Random.id(6),
                 privateId : Random.id(),
-        answersArePublic : answersArePublic,
+                answersArePublic : answersArePublic,
                 answers : []
             }
             questions.insert(q);
