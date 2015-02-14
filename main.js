@@ -142,12 +142,14 @@ if (Meteor.isClient) {
             console.log("focus works!")
             $('body').removeClass("lighter");
             $('body').addClass("darker");
+            $('textarea').attr('placeholder', 'To get anonymous answers')
         },
         "blur textarea" : function(event){
             event.preventDefault();
             console.log("blur works!")
             $('body').removeClass("darker");
             $('body').addClass("lighter");
+            $('textarea').attr('placeholder', 'Type your question here')
         }
     });
     
@@ -157,12 +159,14 @@ if (Meteor.isClient) {
             console.log("focus works!")
             $('body').removeClass("lighter");
             $('body').addClass("darker");
+            //$('textarea').attr('placeholder', 'To get anonymous answers')
         },
         "blur textarea" : function(event){
             event.preventDefault();
             console.log("blur works!")
             $('body').removeClass("darker");
             $('body').addClass("lighter");
+            //$('textarea').attr('placeholder', 'Type your question here')
         }
     });
 }

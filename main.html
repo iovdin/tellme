@@ -28,8 +28,8 @@
 
 <template name="create">
     <form style="width: 500px; margin: 0 auto;">
-        {{description}}
-        <textarea type="text" rows="1" placeholder="What is your question?" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
+        <textarea type="text" rows="1" placeholder="Type your question here" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
+        <div style="float: left; margin-top: 30px; color: rgba(255, 255, 255, 0.5)" class="font_20px"><input type="checkbox"/>Show answers everyone</div>
         <button type="submit" style="float: right">Ask</button>
     </form>
 </template>
@@ -45,7 +45,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
     <h1>{{question}}</h1>
-    <span class="font_20px">Share the link <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
+    <span class="font_20px">Share the question: <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
     <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div> to get answers
     {{#if answers}}
         <ol reversed style="width: 500px; margin: 0 auto;">
@@ -54,7 +54,7 @@
             {{/each}}
         </ol>
     {{else}}
-    <h2 class="comment">Answers will appear here</h2>
+    <h2 class="comment">No answers yet</h2>
     {{/if}}
 </template>
 
@@ -64,10 +64,10 @@
         {{#case answerState="idle"}}
             <textarea type="text" 
                       rows="1" 
-                      placeholder="Type answer here and be honest, it's anonymous" 
+                      placeholder="Answer here. Be honest. You are anonymous" 
                       name="answer" 
                       onkeyup="AutoGrowTextArea(this)"></textarea><br>
-            <button type="submit" style="float: right">Submit Anonymously</button>
+            <button type="submit" style="float: right">Submit</button>
         {{/case}}
         {{#case answerState="error"}}
             error
