@@ -57,7 +57,7 @@ if (Meteor.isClient) {
         if(question.answers){
             this.render("questioner", {
                 data : {
-                    answers : question.answers,
+                    answers : question.answers.reverse(),
                     publicUrl : Meteor.absoluteUrl(question.publicId),
                     question : question.question,
                 }
