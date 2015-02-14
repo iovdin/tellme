@@ -26,7 +26,7 @@ if (Meteor.isClient) {
         "submit form" : function(e){
             e.preventDefault();
             var question = e.target.question.value;
-            Meteor.call('create', question, function(err, id){
+            Meteor.call('create', question, false, function(err, id){
                 if(err){
                     //TOOD: show error
                     console.log("failed to create question", err);
@@ -45,6 +45,7 @@ if (Meteor.isClient) {
             answerState.set("progress");
             var answer = e.target.answer.value;
             answerState.set("progress");
+            var data = this;
             Meteor.call('post', this.publicId, answer, function(err, id){
                 if(err){
                     answerState.set("error");
@@ -54,13 +55,36 @@ if (Meteor.isClient) {
                     answerState.set("done");
                 }
                 Meteor.setTimeout(function(){
-                    e.target.answer.value = "";
-                    answerState.set("idle");
+                    //answerState.set("idle");
+                    console.log("this", data);
+                    if(data.answersArePublic){
+                        Router.go("/" + data.publicId + "/answers")
+                    }
                 }, 1000);
                 //Router.go('/' + id)
             });
         }
     })
+
+    Router.route('/:_id/answers', function(){
+        this.wait(Meteor.subscribe('answerer', this.params._id));
+        this.wait(Meteor.subscribe('questioner', this.params._id));
+        if (!this.ready()) {
+            this.render('loading');
+            return
+        }
+        var question = questions.findOne();
+        if(!question.answers){
+            this.render("access_denied");
+            return;
+        }
+        this.render("view_answers", {
+            data : {
+                answers : question.answers.reverse(),
+                question : question.question,
+            }
+        });
+    });
 
     Router.route('/:_id', function(){
         this.wait(Meteor.subscribe('answerer', this.params._id));
@@ -70,7 +94,7 @@ if (Meteor.isClient) {
             return
         }
         var question = questions.findOne();
-        if(question.answers){
+        if(question.privateId){
             this.render("questioner", {
                 data : {
                     answers : question.answers.reverse(),
@@ -82,10 +106,12 @@ if (Meteor.isClient) {
             this.render("answerer", { 
                 data : {
                     question : question.question,
-                    publicId : this.params._id
+                    publicId : question.publicId,
+                    answersArePublic : question.answersArePublic
                 }
             });
-            title.set(sitename + " - " + question.question);
+            title.set(sitename + " - answer anonymously");
+            description.set(question.question);
         }
     });
 
@@ -100,10 +126,8 @@ if (Meteor.isClient) {
 
     Template.registerHelper("case", function(){
         var pair =_.chain(this).pairs().first().value();
-        //console.log("case pair", pair);
         var rvar = window[pair[0]];
         if(!rvar){
-            //console.log("create var ", pair[0]);
             rvar = window[pair[0]] = new ReactiveVar("default");
         }
         if(rvar instanceof ReactiveVar && rvar.get().toString() == pair[1]) {
@@ -148,18 +172,24 @@ if (Meteor.isServer) {
 
     Meteor.startup(function () {
         Meteor.publish("questioner", function(id){
-            return questions.find({privateId : id}, {fields : {publicId : 1, answers : 1, question : 1}});
+            return questions.find({privateId : id}, {fields : {privateId : 1, publicId : 1, answers : 1, question : 1}});
         });
         Meteor.publish("answerer", function(id){
-            return questions.find({publicId : id}, {fields : { question : 1}});
+            var question = questions.findOne({publicId : id}, {fields : { answersArePublic : 1}});
+            var fields = { publicId: 1, question : 1, answersArePublic : 1 };
+            if(question && question.answersArePublic){
+                fields.answers = 1;
+            }
+            return questions.find({publicId : id}, {fields : fields });
         });
     });
     Meteor.methods({
-        create : function(question){
+        create : function(question, answersArePublic){
             var q = { 
                 question : question ,
                 publicId : Random.id(6),
                 privateId : Random.id(),
+        answersArePublic : answersArePublic,
                 answers : []
             }
             questions.insert(q);

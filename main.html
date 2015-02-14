@@ -86,6 +86,20 @@
 loading
 </template>
 
+<template name="view_answers">
+{{question}}
+<ol reversed style="width: 500px; margin: 0 auto;">
+    {{#each answers}}
+    <li style="margin: 60px 0px; padding:0;" class="align_left"> {{ this }} </li>
+    {{/each}}
+</ol>
+
+</template>
+
+<template name="access_denied">
+Viewing answers is not permitted
+</template>
+
 
 <template name="_case_default">
   {{> UI.contentBlock}}
