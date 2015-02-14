@@ -125,6 +125,7 @@ if (Meteor.isClient) {
     });
 
     Template.registerHelper("case", function(){
+        _.extend(this, Template.parentData(1));
         var pair =_.chain(this).pairs().first().value();
         var rvar = window[pair[0]];
         if(!rvar){
@@ -156,13 +157,13 @@ if (Meteor.isClient) {
             event.preventDefault();
             $('body').removeClass("lighter");
             $('body').addClass("darker");
-            //$('textarea').attr('placeholder', 'To get anonymous answers')
+            $('textarea').attr('placeholder', 'Be honest. You are anonymous');
         },
         "blur textarea" : function(event){
             event.preventDefault();
             $('body').removeClass("darker");
             $('body').addClass("lighter");
-            //$('textarea').attr('placeholder', 'Type your question here')
+            $('textarea').attr('placeholder', 'Answer here');
         }
     });
 }

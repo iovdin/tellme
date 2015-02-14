@@ -68,13 +68,13 @@
         {{#case answerState="idle"}}
             <textarea type="text" 
                       rows="1" 
-                      placeholder="Answer here. Be honest. You are anonymous" 
+                      placeholder="Answer here" 
                       name="answer" 
                       onkeyup="AutoGrowTextArea(this)"></textarea><br>
             {{#if answersArePublic}}
                 Your answer is visible to everyone
             {{else}}
-                Your answer is only visible to person that asked
+                Your answer is only visible to a person asking
             {{/if}}
             <button type="submit" style="float: right">Submit</button>
         {{/case}}
