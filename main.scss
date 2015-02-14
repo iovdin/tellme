@@ -107,3 +107,20 @@ button:hover {
     color: #fff;
 
 }
+
+.darker {
+    @include animation(fadeIn 1.0s ease-in);
+    @include animation-fill-mode(forwards);
+}
+.lighter {
+    @include animation(fadeOut 1.0s ease-in);
+    @include animation-fill-mode(forwards);
+}
+@include keyframes(fadeIn) {
+    from {background: #fff;}
+    to {background: #343A41;}
+}
+@include keyframes(fadeOut) {
+    from {background: #343A41;}
+    to {background: #fff;}
+}

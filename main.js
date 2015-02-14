@@ -94,6 +94,21 @@ if (Meteor.isClient) {
         }
         return null;
     });
+    
+    Template.create.events({
+        "focus textarea" : function(event){
+            event.preventDefault();
+            console.log("focus works!")
+            $('body').removeClass("lighter");
+            $('body').addClass("darker");
+        },
+        "blur textarea" : function(event){
+            event.preventDefault();
+            console.log("blur works!")
+            $('body').removeClass("darker");
+            $('body').addClass("lighter");
+        }
+    });
 }
 
 questions = new Mongo.Collection("questions");
