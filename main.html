@@ -52,7 +52,11 @@
     <h1>{{question}}</h1><br>
     <form class="align_center" style="width: 500px; margin: 0 auto;">
         {{#case answerState="idle"}}
-            <textarea type="text" rows="1" placeholder="Type answer here" name="answer" onkeyup="AutoGrowTextArea(this)"></textarea><br>
+            <textarea type="text" 
+                      rows="1" 
+                      placeholder="Type answer here and be honest, it's anonymous" 
+                      name="answer" 
+                      onkeyup="AutoGrowTextArea(this)"></textarea><br>
             <button type="submit" style="float: right">Submit</button>
         {{/case}}
         {{#case answerState="error"}}

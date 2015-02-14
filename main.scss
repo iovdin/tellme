@@ -21,6 +21,15 @@ html, body {
     height: 100%;
 }
 
+html { 
+    background-image: url("img/mask_bg.png");
+    background-position: center;
+    background-size: auto 120%;
+    background-color: #000;
+}
+
+body { background: #fff }
+
 div.container {
     @include display(flex);
     height: 100%;
@@ -118,9 +127,9 @@ button:hover {
 }
 @include keyframes(fadeIn) {
     from {background: #fff;}
-    to {background: #343A41;}
+    to {background: rgba(52, 58, 65, 0.5);}
 }
 @include keyframes(fadeOut) {
-    from {background: #343A41;}
+    from {background: rgba(52, 58, 65, 0.5);}
     to {background: #fff;}
 }

@@ -109,6 +109,21 @@ if (Meteor.isClient) {
             $('body').addClass("lighter");
         }
     });
+    
+    Template.answerer.events({
+        "focus textarea" : function(event){
+            event.preventDefault();
+            console.log("focus works!")
+            $('body').removeClass("lighter");
+            $('body').addClass("darker");
+        },
+        "blur textarea" : function(event){
+            event.preventDefault();
+            console.log("blur works!")
+            $('body').removeClass("darker");
+            $('body').addClass("lighter");
+        }
+    });
 }
 
 questions = new Mongo.Collection("questions");
