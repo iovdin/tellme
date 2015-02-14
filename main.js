@@ -111,7 +111,7 @@ if (Meteor.isServer) {
         create : function(question){
             var q = { 
                 question : question ,
-                publicId : Random.id(),
+                publicId : Random.id(6),
                 privateId : Random.id(),
                 answers : []
             }
