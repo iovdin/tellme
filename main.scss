@@ -1,4 +1,4 @@
-//@import ".meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon";
+@import ".meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon.scss";
 @import "lib/layout.css";
 @import "lib/animate.css";
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400);
@@ -19,6 +19,26 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
+}
+
+div.container {
+    @include display(flex);
+    height: 100%;
+}
+
+div.center {
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
+    @include flex(1);
+    overflow-Y: scroll;
+}
+
+div.child {
+    margin: auto;
+    padding: 100px 0;
+    width: 680px;
+    text-align: center;
 }
 
 a {
@@ -43,22 +63,14 @@ h2 { font-size: 30px; }
     color: $lightgrey;
 }
 
-ul {
-    list-style-type: decimal;
-    //list-style: decimal;
-    
-    li {
-        margin: 20px 0px;
-    }
-}
-
 textarea {
-    width: 400px;
+    width: 476px;
     padding: 8px 12px;
-    border: 1px solid $grey;
-    //border-bottom: 2px solid $grey;
-    border-radius: 8px;
+    border: 0px solid $grey;
+    border-bottom: 2px solid $grey;
+    //border-radius: 8px;
     font-size: 24px;
+    resize: none;
 }
 
 .input {

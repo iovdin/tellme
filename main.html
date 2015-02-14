@@ -1,64 +1,75 @@
 <head>
   <title>TellMe</title>
+    
+    <script type="text/javascript">
+    function AutoGrowTextArea(textField)
+    {
+      if (textField.clientHeight < textField.scrollHeight)
+      {
+        textField.style.height = textField.scrollHeight + "px";
+        if (textField.clientHeight < textField.scrollHeight)
+        {
+          textField.style.height = 
+            (textField.scrollHeight * 2 - textField.clientHeight) + "px";
+        }
+      }
+    }
+    </script>
 </head>
 
 <body>
 </body>
 
 <template name="MainLayout">
-    <div fit horizontal center-justified layout center>
-        {{> yield }}
-    </div>
-</template>
-
-<template name="create">
-    <div vertical layout center>
-        <form style="align_right">
-            <div class="input"></div>
-            <textarea type="text" rows="auto" placeholder="What is your question?" name="question"></textarea><br>
-            <button type="submit" style="float: right">Ask</button>
-        </form>
-    </div>
-</template>
-
-<template name="questioner">
-    <div style="widht: 100%; height: 100%; overflow-y: auto;">
-        <div style="width: 100%; margin: 100px auto;" class="align_center">
-            <h1>{{question}}</h1>
-            <span class="font_20px">Question link <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
-            {{#if answers}}
-                <ol reversed style="width: 500px">
-                    {{#each answers}}
-                        <li style="margin: 40px 0px; padding:0;" class="align_left"> {{ this }} </li>
-                    {{/each}}
-                </ol>
-            {{else}}
-            <h2 class="comment">Answers will appear here</h2>
-            {{/if}}
+    <div class="container">
+        <div class="center">
+            <div class="child">
+                {{> yield }}
+            </div>
         </div>
     </div>
 </template>
 
+<template name="create">
+    <form style="align_right">
+        <div class="input"></div>
+        <textarea type="text" rows="1" placeholder="What is your question?" name="question" onkeyup="AutoGrowTextArea(this)"></textarea><br>
+        <button type="submit" style="float: right">Ask</button>
+    </form>
+</template>
+
+<template name="questioner">
+    <h1>{{question}}</h1>
+    <span class="font_20px">Question link <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
+    {{#if answers}}
+        <ol reversed style="width: 500px; margin: 0 auto;">
+            {{#each answers}}
+                <li style="margin: 60px 0px; padding:0;" class="align_left"> {{ this }} </li>
+            {{/each}}
+        </ol>
+    {{else}}
+    <h2 class="comment">Answers will appear here</h2>
+    {{/if}}
+</template>
+
 <template name="answerer">
-    <div vertical layout center>
-        <h1>{{question}}</h1><br>
-        <form class="align_center">
-            {{#case answerState="idle"}}
-                <textarea type="text" placeholder="Type answer here" name="answer"></textarea><br>
-                <button type="submit" style="float: right">Submit</button>
-            {{/case}}
-            {{#case answerState="error"}}
-                error
-            {{/case}}
-            {{#case answerState="done"}}
-                <img src="img/done.png" width="80px">
-                <h2 class="comment align_center">Thank you! You answer<br>has been submitted</h2>
-            {{/case}}
-            {{#case answerState="progress"}}
-                progress
-            {{/case}}
-        </form>
-    </div>
+    <h1>{{question}}</h1><br>
+    <form class="align_center" style="width: 500px; margin: 0 auto;">
+        {{#case answerState="idle"}}
+            <textarea type="text" rows="1" placeholder="Type answer here" name="answer" onkeyup="AutoGrowTextArea(this)"></textarea><br>
+            <button type="submit" style="float: right">Submit</button>
+        {{/case}}
+        {{#case answerState="error"}}
+            error
+        {{/case}}
+        {{#case answerState="done"}}
+            <img src="img/done.png" width="80px">
+            <h2 class="comment align_center">Thank you! You answer<br>has been submitted</h2>
+        {{/case}}
+        {{#case answerState="progress"}}
+            progress
+        {{/case}}
+    </form>
 </template>
 
 <template name="loading">
