@@ -72,6 +72,11 @@ h2 { font-size: 30px; }
     color: $lightgrey;
 }
 
+form {
+    width: 500px; 
+    margin: 0 auto;
+}
+
 textarea {
     width: 496px;
     padding: 8px 2px;
@@ -142,21 +147,9 @@ input[type=checkbox]:checked ~ label.checkbox {
     background-size: 90% auto;
 }
 
-input[type="checkbox"] {
-    display:inline-block;
-    background: transparent;
-    //border: 1px solid #fff;
-    //outline: 2px solid #fff;
-    //width:20px;
-    //height:20px;
-    margin: 0 8px 0 0;
-    //margin: 0px;
-    vertical-align: middle;
-    //background: none;
-    cursor:pointer;
-}
-input[type="checkbox"]:checked + label span {
-    //background:url(check_radio_sheet.png) -19px top no-repeat;
+.answers{
+    width: 500px; 
+    margin: 0 auto;
 }
 
 .darker {
@@ -178,4 +171,24 @@ input[type="checkbox"]:checked + label span {
 
 .fb-share-button {
     margin-left: 40px;
+}
+
+@media only screen and (max-device-width: 480px) {
+    html, body {
+        width: 400px;
+        height: 100%;
+    }
+    
+    div.child {
+        width: 360px;
+    }
+    
+    form {
+        width: 360px;
+    } 
+    
+    textarea {
+        width: 350px;
+    }
+
 }

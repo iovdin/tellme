@@ -1,5 +1,6 @@
 <head>
     <title>tellmet.ru</title>
+    <meta name="viewport" content="width=400, user-scalable=no">
     <link rel="icon" type="image/png" href="img/favicon.png">
     <script type="text/javascript">
         function AutoGrowTextArea(textField) {
@@ -30,7 +31,7 @@
 <!--{{#if myquestions}}
     <a href="/myquestions">My Questions</a>
 {{/if}}-->
-    <form style="width: 500px; margin: 0 auto;">
+    <form>
         <textarea type="text" rows="1" placeholder="Type your question here" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
         <div style="float: left; margin-top: 30px;">
             <input type="checkbox" id="checkbox" name="answersArePublic"/>
@@ -55,7 +56,7 @@
     <span class="font_20px">Share the question: <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
     <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
     {{#if answers}}
-        <ol reversed style="width: 500px; margin: 0 auto;">
+        <ol reversed class="answers">
             {{#each answers}}
                 <li style="margin: 60px 0px; padding:0;" class="align_left"> {{ this }} </li>
             {{/each}}
@@ -67,7 +68,7 @@
 
 <template name="answerer">
     <h1>{{question}}</h1><br>
-    <form class="align_center" style="width: 500px; margin: 0 auto;">
+    <form class="align_center">
         {{#case answerState="idle"}}
         <textarea type="text" 
                   rows="1" 
@@ -107,12 +108,11 @@ loading
 
 <template name="view_answers">
     <h1>{{question}}</h1><br>
-<ol reversed style="width: 500px; margin: 0 auto;">
-    {{#each answers}}
-    <li style="margin: 60px 0px; padding:0;" class="align_left"> {{ this }} </li>
-    {{/each}}
-</ol>
-
+    <ol reversed class="answers">
+        {{#each answers}}
+        <li style="margin: 60px 0px; padding:0;" class="align_left"> {{ this }} </li>
+        {{/each}}
+    </ol>
 </template>
 
 <template name="access_denied">
