@@ -41,6 +41,7 @@ div.center {
     @include justify-content(center);
     @include flex(1);
     overflow-Y: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
 div.child {
@@ -197,6 +198,7 @@ input[type=checkbox]:checked ~ label.checkbox {
     
     div.child {
         width: 360px;
+        padding: 20px 0;
     }
     
     form {
