@@ -12,6 +12,7 @@
             }
         }
     </script>
+    <script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="windows-1251"></script>
 </head>
 
 <body>
@@ -55,6 +56,7 @@
     <h1>{{question}}</h1>
     <span class="font_20px">Share the question: <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
     <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
+    <span id="vk-share-button"></span>
     {{#if answers}}
         <ol reversed class="answers">
             {{#each answers}}

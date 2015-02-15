@@ -115,6 +115,20 @@ if (Meteor.isClient) {
         });
     });
 
+    Template.questioner.rendered = function(){
+        //console.log("rendered", this.data);
+        var html = VK.Share.button({
+            url : this.data.publicUrl, 
+            type: 'link', 
+            noparse : true, 
+            title : title.get(), 
+            description : description.get()
+        }, {
+            type : 'link',
+            text : 'На стену'
+        });
+        $('#vk-share-button').html(html);
+    }
     Router.route('/:_id', function(){
         this.wait(Meteor.subscribe('answerer', this.params._id));
         this.wait(Meteor.subscribe('questioner', this.params._id));
@@ -123,6 +137,8 @@ if (Meteor.isClient) {
             return
         }
         var question = questions.findOne();
+        title.set(sitename + " - answer anonymously");
+        description.set(question.question);
         if(question.privateId){
             this.render("questioner", {
                 data : {
