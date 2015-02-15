@@ -27,9 +27,9 @@
 </template>
 
 <template name="create">
-{{#if myquestions}}
+<!--{{#if myquestions}}
     <a href="/myquestions">My Questions</a>
-{{/if}}
+{{/if}}-->
     <form style="width: 500px; margin: 0 auto;">
         <textarea type="text" rows="1" placeholder="Type your question here" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
         <div style="float: left; margin-top: 30px;">
@@ -69,17 +69,21 @@
     <h1>{{question}}</h1><br>
     <form class="align_center" style="width: 500px; margin: 0 auto;">
         {{#case answerState="idle"}}
-            <textarea type="text" 
-                      rows="1" 
-                      placeholder="Answer here" 
-                      name="answer" 
-                      onkeyup="AutoGrowTextArea(this)"></textarea><br>
+        <textarea type="text" 
+                  rows="1" 
+                  placeholder="Answer here" 
+                  name="answer" 
+                  onkeyup="AutoGrowTextArea(this)"></textarea><br>
+        <div style="float: left; margin-top: 30px; color: rgba(255, 255, 255, 0.5)" class="font_20px">
             {{#if answersArePublic}}
                 Your answer is visible to everyone
             {{else}}
-                Your answer is only visible to a person asking
+            <!--
+                Your answer is only<br>visible to a person asking
+            -->
             {{/if}}
-            <button type="submit" style="float: right">Submit</button>
+        </div>
+        <button type="submit" style="float: right">Submit</button>
         {{/case}}
         {{#case answerState="error"}}
             error
@@ -99,7 +103,7 @@ loading
 </template>
 
 <template name="view_answers">
-{{question}}
+    <h1>{{question}}</h1><br>
 <ol reversed style="width: 500px; margin: 0 auto;">
     {{#each answers}}
     <li style="margin: 60px 0px; padding:0;" class="align_left"> {{ this }} </li>
