@@ -5,6 +5,7 @@ if (Meteor.isClient) {
     description = new ReactiveVar("Ask a question to get anonymous answers");
 
     Session.setDefaultPersistent("myquestions", []);
+    Session.setDefaultPersistent("myanswers", []);
 
 
     Router.configure({
@@ -71,7 +72,7 @@ if (Meteor.isClient) {
             var answer = e.target.answer.value;
             answerState.set("progress");
             var data = this;
-            Meteor.call('post', this.publicId, answer, function(err, id){
+            Meteor.call('post', data.publicId, answer, function(err, id){
                 if(err){
                     answerState.set("error");
                     //TOOD: show error
@@ -79,6 +80,11 @@ if (Meteor.isClient) {
                 } else {
                     answerState.set("done");
                 }
+
+                var a = Session.get("myanswers");
+                a.push(data.publicId)
+                Session.setPersistent("myanswers", a);
+
                 Meteor.setTimeout(function(){
                     if(data.answersArePublic){
                         answerState.set("idle");
@@ -128,11 +134,15 @@ if (Meteor.isClient) {
         } else {
             title.set(sitename + " - answer anonymously");
             description.set(question.question);
+            var answers = Session.get("myanswers");
+            if(answers.indexOf(question.publicId) >= 0) {
+                answerState.set("done");
+            }
             this.render("answerer", { 
                 data : {
                     question : question.question,
                     publicId : question.publicId,
-                    answersArePublic : question.answersArePublic
+                    answersArePublic : question.answersArePublic,
                 }
             });
         }

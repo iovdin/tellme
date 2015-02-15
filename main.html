@@ -91,6 +91,9 @@
         {{#case answerState="done"}}
             <img src="img/done.png" width="80px">
             <h2 class="comment align_center">Thank you! You answer<br>has been submitted</h2>
+            {{#if answersArePublic}}
+            <a href="/{{publicId}}/answers">view results</a>
+            {{/if}}
         {{/case}}
         {{#case answerState="progress"}}
             progress
