@@ -150,6 +150,12 @@ input[type=checkbox]:checked ~ label.checkbox {
 .answers{
     width: 500px; 
     margin: 0 auto;
+    padding: 0 0 0 20px;
+    
+    li {
+        margin: 60px 0px; 
+        padding:0;
+    }
 }
 
 .darker {
@@ -174,9 +180,19 @@ input[type=checkbox]:checked ~ label.checkbox {
 }
 
 @media only screen and (max-device-width: 480px) {
+    
+    * {
+        font-size: 20px;
+        font-weight: 300;
+    }
+    
     html, body {
         width: 400px;
         height: 100%;
+    }
+    
+    h1 {
+        font-size: 28px;
     }
     
     div.child {
@@ -190,5 +206,12 @@ input[type=checkbox]:checked ~ label.checkbox {
     textarea {
         width: 350px;
     }
-
+    
+    .answers{
+        width: 320px; 
+        
+        li {
+            margin: 30px 0px;
+        }
+    }
 }
