@@ -125,7 +125,7 @@ if (Meteor.isClient) {
             description : description.get()
         }, {
             type : 'link',
-            text : 'На стену'
+            text : i18n('vk_to_wall')
         });
         $('#vk-share-button').html(html);
     }
@@ -137,7 +137,7 @@ if (Meteor.isClient) {
             return
         }
         var question = questions.findOne();
-        title.set(sitename + " - answer anonymously");
+        title.set(sitename + ' - '+ i18n('title_answer'));
         description.set(question.question);
         if(question.privateId){
             this.render("questioner", {
@@ -148,8 +148,6 @@ if (Meteor.isClient) {
                 }
             });
         } else {
-            title.set(sitename + " - answer anonymously");
-            description.set(question.question);
             var answers = Session.get("myanswers");
             if(answers.indexOf(question.publicId) >= 0) {
                 answerState.set("done");
@@ -191,13 +189,13 @@ if (Meteor.isClient) {
             event.preventDefault();
             $('body').removeClass("lighter");
             $('body').addClass("darker");
-            $('textarea').attr('placeholder', 'To get anonymous answers')
+            $('textarea').attr('placeholder', i18n('create.placeholder_dark'));
         },
         "blur textarea" : function(event){
             event.preventDefault();
             $('body').removeClass("darker");
             $('body').addClass("lighter");
-            $('textarea').attr('placeholder', 'Type your question here')
+            $('textarea').attr('placeholder', i18n('create.placeholder_light'));
         }
     });
     
@@ -206,13 +204,13 @@ if (Meteor.isClient) {
             event.preventDefault();
             $('body').removeClass("lighter");
             $('body').addClass("darker");
-            $('textarea').attr('placeholder', 'Be honest. You are anonymous');
+            $('textarea').attr('placeholder', i18n("answerer.placeholder_dark"));
         },
         "blur textarea" : function(event){
             event.preventDefault();
             $('body').removeClass("darker");
             $('body').addClass("lighter");
-            $('textarea').attr('placeholder', 'Answer here');
+            $('textarea').attr('placeholder', i18n("answerer.placeholder_light"));
         }
     });
 }

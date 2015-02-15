@@ -30,16 +30,16 @@
 
 <template name="create">
 <!--{{#if myquestions}}
-    <a href="/myquestions">My Questions</a>
+    <a href="/myquestions">{{i18n 'myquestions'}}</a>
 {{/if}}-->
     <form>
-        <textarea type="text" rows="1" placeholder="Type your question here" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
+        <textarea type="text" rows="1" placeholder="{{i18n 'create.placeholder_light'}}" name="question" id="question" onkeyup="AutoGrowTextArea(this)" style="font-size: 30px"></textarea><br>
         <div style="float: left; margin-top: 30px;">
             <input type="checkbox" id="checkbox" name="answersArePublic"/>
             <label for="checkbox" class="checkbox"> </label>
-            <label for="checkbox" style="color: rgba(255, 255, 255, 0.5)" class="font_20px" >Everyone can see answers</label>
+            <label for="checkbox" style="color: rgba(255, 255, 255, 0.5)" class="font_20px" >{{i18n en_US='Everyone can see answers' ru_RU='Ответы видны всем'}}</label>
         </div>
-        <button type="submit" style="float: right">Ask</button>
+        <button type="submit" style="float: right">{{i18n en_US='Ask' ru_RU='Спросить'}}</button>
     </form>
 </template>
 
@@ -54,9 +54,15 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
     <h1>{{question}}</h1>
-    <span class="font_20px">Share the question: <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a></span>
-    <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
-    <span id="vk-share-button"></span>
+    <span class="font_20px">
+        {{#i18n locale="en_US"}}
+        Share the question: <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a>
+            <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
+        {{/i18n}}
+        {{#i18n locale="ru_RU"}}
+            Повесить на стену: <span id="vk-share-button"></span>
+        {{/i18n}}
+    </span>
     {{#if answers}}
         <ol reversed class="answers">
             {{#each answers}}
@@ -64,7 +70,7 @@
             {{/each}}
         </ol>
     {{else}}
-    <h2 class="comment">No answers yet</h2>
+    <h2 class="comment">{{i18n en_US='No answers yet' ru_RU='нет ответов'}}</h2>
     {{/if}}
 </template>
 
@@ -74,28 +80,31 @@
         {{#case answerState="idle"}}
         <textarea type="text" 
                   rows="1" 
-                  placeholder="Answer here" 
+                  placeholder="{{i18n 'answerer.placeholder_light'}}" 
                   name="answer" 
                   onkeyup="AutoGrowTextArea(this)"></textarea><br>
         <div style="float: left; margin-top: 30px; color: rgba(255, 255, 255, 0.5)" class="font_20px">
             {{#if answersArePublic}}
-                Your answer is visible to everyone
-            {{else}}
-            <!--
-                Your answer is only<br>visible to a person asking
-            -->
+            {{i18n en_EN='Your answer is visible to everyone' ru_RU='Ответ будет виден всем'}}
             {{/if}}
         </div>
-        <button type="submit" style="float: right">Submit</button>
+        <button type="submit" style="float: right">{{i18n en_US='Submit' ru_RU='Ответить'}}</button>
         {{/case}}
         {{#case answerState="error"}}
             error
         {{/case}}
         {{#case answerState="done"}}
             <img src="img/done.png" width="80px">
-            <h2 class="comment align_center">Thank you! You answer<br>has been submitted</h2>
+            <h2 class="comment align_center">
+                {{#i18n locale='en_US'}}
+                Thank you! Your answer<br>has been submitted
+                {{/i18n}}
+                {{#i18n locale='ru_RU'}}
+                Спасибо за ответ! 
+                {{/i18n}}
+            </h2>
             {{#if answersArePublic}}
-            <a href="/{{publicId}}/answers">view results</a>
+            <a href="/{{publicId}}/answers">{{i18n en_US='view results' ru_RU='посмотреть все ответы'}}</a>
             {{/if}}
         {{/case}}
         {{#case answerState="progress"}}
@@ -105,7 +114,7 @@
 </template>
 
 <template name="loading">
-loading
+{{i18n en_US='loading' ru_RU='загрузка'}}
 </template>
 
 <template name="view_answers">
@@ -118,11 +127,16 @@ loading
 </template>
 
 <template name="access_denied">
+{{#i18n locale='en_US'}}
 Viewing answers is not permitted
+{{/i18n}}
+{{#i18n locale='ru_RU'}}
+У этого вопроса нельзя посмотреть все ответы
+{{/i18n}}
 </template>
 
 <template name="myquestions">
-My Questions:
+{{i18n 'myquestions'}}:
     {{#each questions}}
     <li style="margin: 60px 0px; padding:0;" class="align_left"> <a href="/{{privateId}}">{{ question }} </a> </li>
     {{/each}}
