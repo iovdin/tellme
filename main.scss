@@ -6,6 +6,7 @@
 $blue: #0079FF;
 $grey: #bbb;
 $lightgrey: #bbb;
+$darkgrey: #404040;
 
 * {
     font-size: 24px;
@@ -51,6 +52,14 @@ div.child {
     text-align: center;
 }
 
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(51, 51, 51, 0.90);
+}
+
 a {
     color: $blue;
     text-decoration: none;
@@ -70,7 +79,40 @@ h2 { font-size: 30px; }
 .font_20px { font-size: 20px }
 
 .comment {
-    color: $lightgrey;
+    //color: $lightgrey;
+    opacity: 0.5;
+}
+
+.menu-icon {
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+.page {
+    display: block;
+    width: 640px;
+    
+    * {
+        color: #fff;
+    }
+    
+    li {
+        padding: 0;
+        margin: 30px 0;
+        list-style-type: none;
+    }
+    
+    button {
+        border: 2px solid #fff;
+    }
+    
+    > div {
+        display: block;
+        float: left;
+        width: 300px;
+        margin: 20px 10px;
+    }
 }
 
 form {
@@ -199,6 +241,14 @@ input[type=checkbox]:checked ~ label.checkbox {
     div.child {
         width: 360px;
         padding: 20px 0;
+    }
+    
+    .page {
+        width: 360px;
+        
+        > div {
+            width: 360;
+        }
     }
     
     form {

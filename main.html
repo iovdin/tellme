@@ -26,6 +26,18 @@
             </div>
         </div>
     </div>
+    {{#if menuOpen}}
+        <div class="container menu">
+            <div class="center">
+                <div class="child">
+                    {{> myquestions}}
+                </div>
+            </div>
+        </div>
+        <a href="" id="closeMenu" class="menu-icon">xdsfdsff</a>
+    {{else}}
+        <a href="" id="openMenu" class="menu-icon">eefefwef=</a>
+    {{/if}}
 </template>
 
 <template name="create">
@@ -53,16 +65,17 @@
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1586015348309962&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-    <h1>{{question}}</h1>
     <span class="font_20px">
         {{#i18n locale="en_US"}}
-        Share the question: <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a>
-            <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
+        Now share the question to get replies<br>
+        <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a><br>
+        Copy the link <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
         {{/i18n}}
         {{#i18n locale="ru_RU"}}
             Повесить на стену: <span id="vk-share-button"></span>
         {{/i18n}}
     </span>
+    <h1>{{question}}</h1>
     {{#if answers}}
         <ol reversed class="answers">
             {{#each answers}}
@@ -85,7 +98,7 @@
                   onkeyup="AutoGrowTextArea(this)"></textarea><br>
         <div style="float: left; margin-top: 30px; color: rgba(255, 255, 255, 0.5)" class="font_20px">
             {{#if answersArePublic}}
-            {{i18n en_US='Your answer is visible to everyone' ru_RU='Ответ будет виден всем'}}
+                {{i18n en_US='Your answer is visible to everyone' ru_RU='Ответ будет виден всем'}}
             {{/if}}
         </div>
         <button type="submit" style="float: right">{{i18n en_US='Submit' ru_RU='Ответить'}}</button>
@@ -136,10 +149,29 @@ Viewing answers is not permitted
 </template>
 
 <template name="myquestions">
-{{i18n 'myquestions'}}:
-    {{#each questions}}
-    <li style="margin: 60px 0px; padding:0;" class="align_left"> <a href="/{{privateId}}">{{ question }} </a> </li>
-    {{/each}}
+    <div class="page">
+        <div>
+            <h1>{{i18n 'myquestions'}}</h1>
+            {{#each questions}}
+                <li class="align_left"> <a href="/{{privateId}}">{{ question }} </a> </li>
+            {{/each}}
+            <li class="align_left"> <a href="/{{privateId}}">
+                Nulla sollicitudin eget turpis at semper.
+            </a> </li>
+            <li class="align_left"> <a href="/{{privateId}}">
+                Quisque aliquam elit libero, nec sagittis augue elementum at. Ut et turpis tellus. Etiam eget gravida felis, eget vulputate sem.
+            </a> </li>
+            <li class="align_left"> <a href="/{{privateId}}">
+                Nulla justo nulla, blandit ac dictum et, feugiat vel diam. Suspendisse non libero lacinia lectus molestie tincidunt eget vitae ipsum. Fusce sodales vel erat sed blandit.        
+            </a> </li>
+            <h3 class="comment">You didn't ask a question yet</h3>
+            <button type="submit">{{i18n en_US='Ask new question' ru_RU='Задать вопрос'}}</button>
+        </div>
+        <div>
+            <h1>You answered</h1>
+            <h3 class="comment">You did't answer any question yet</h3>
+        </div>
+    </div>
 </template>
 
 

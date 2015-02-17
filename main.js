@@ -44,7 +44,18 @@ if (Meteor.isClient) {
             }
         });
     });
+    
+    menuOpen = new ReactiveVar(false);
 
+    Template.MainLayout.events({
+        "click #openMenu" : function(e){
+            menuOpen.set(true);
+        },
+        "click #closeMenu" : function(e){
+            menuOpen.set(false);
+        }
+    });
+    
     Template.create.events({
         "submit form" : function(e){
             e.preventDefault();
