@@ -34,9 +34,9 @@
                 </div>
             </div>
         </div>
-        <a href="" id="closeMenu" class="menu-icon">xdsfdsff</a>
+        <a href="" id="closeMenu" class="menu-icon"></a>
     {{else}}
-        <a href="" id="openMenu" class="menu-icon">eefefwef=</a>
+        <a href="" id="openMenu" class="menu-icon"></a>
     {{/if}}
 </template>
 
@@ -67,9 +67,10 @@
 }(document, 'script', 'facebook-jssdk'));</script>
     <span class="font_20px">
         {{#i18n locale="en_US"}}
-        Now share the question to get replies<br>
-        <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a><br>
-        Copy the link <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
+            Now share the question to get replies<br>
+            <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a><br>
+            Copy the link
+            <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
         {{/i18n}}
         {{#i18n locale="ru_RU"}}
             Повесить на стену: <span id="vk-share-button"></span>

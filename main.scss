@@ -85,9 +85,24 @@ h2 { font-size: 30px; }
 
 .menu-icon {
     position: fixed;
-    right: 0;
+    display: block;
+    width: 80px;
+    height: 80px;
+    right: 20px;
     top: 0;
+    background-size: 40px auto;
+    background-position: center;
+    background-repeat: no-repeat;
 }
+
+#openMenu {
+    background-image: url("img/menu.png");
+    background-size: 30px auto;
+}
+#closeMenu {
+    background-image: url("img/close.png");
+}
+
 
 .page {
     display: block;
@@ -257,6 +272,10 @@ input[type=checkbox]:checked ~ label.checkbox {
     
     textarea {
         width: 350px;
+    }
+    
+    .menu-icon {
+        right: 0;
     }
     
     .answers{
