@@ -7,9 +7,17 @@ if (Meteor.isClient) {
     Session.setDefaultPersistent("myquestions", []);
     Session.setDefaultPersistent("myanswers", []);
 
+    Meteor.subscribe('myquestions', Session.get("myquestions"));
+    Meteor.subscribe('myanswers', Session.get("myanswers"));
+
 
     Router.configure({
         layoutTemplate: 'MainLayout',
+        onBeforeAction : function(){
+            //console.log("onBeforeAction", this.params)
+            menuOpen.set(this.params.hash == "menu");
+            this.next();
+        },
         onAfterAction : function(){
             SEO.set({
                 title: title.get(),
@@ -25,34 +33,38 @@ if (Meteor.isClient) {
     });
 
     Router.route('/', function(){
-        this.render("create", { data : {
-            myquestions : function(){
-                return Session.get("myquestions");
-            }
-        }});
+        this.render("create");
     });
-    Router.route('/myquestions', function(){
-        this.wait(Meteor.subscribe('myquestions', Session.get("myquestions")));
-        if (!this.ready()) {
-            this.render('loading');
-            return
+    Template.my.helpers({
+        questions : function(){ 
+            return questions.find({privateId : {$in : Session.get("myquestions")}});
+        },
+        ianswered : function(){
+            return questions.find({publicId : {$in : Session.get("myanswers")}});
         }
-
-        this.render("myquestions", { 
-            data : { 
-                questions : questions.find()
-            }
-        });
+    });
+    Template.my.events({
+        "click .ask_btn" : function(e){
+            e.preventDefault();
+            Router.go("/");
+            menuOpen.set(false);
+        }
     });
     
     menuOpen = new ReactiveVar(false);
 
     Template.MainLayout.events({
         "click #openMenu" : function(e){
+            e.preventDefault();
+            var pathname = window.location.pathname;
             menuOpen.set(true);
+            Router.go(pathname +"#menu");
         },
         "click #closeMenu" : function(e){
+            e.preventDefault();
             menuOpen.set(false);
+            var pathname = window.location.pathname; 
+            Router.go(pathname);
         }
     });
     
@@ -98,12 +110,16 @@ if (Meteor.isClient) {
                 Session.setPersistent("myanswers", a);
 
                 Meteor.setTimeout(function(){
-                    if(data.answersArePublic){
-                        answerState.set("idle");
-                        Router.go("/" + data.publicId + "/answers")
-                    } 
+                    answerState.set("idle");
+                    /*if(data.answersArePublic){
+                        //Router.go("/" + data.publicId + "/answers")
+                    } */
                 }, 1000);
             });
+        },
+        "click .ask_btn": function(e){
+            e.preventDefault();
+            Router.go("/");
         }
     })
 
@@ -142,16 +158,21 @@ if (Meteor.isClient) {
         $('#vk-share-button').html(html);
     }
     Router.route('/:_id', function(){
-        this.wait(Meteor.subscribe('answerer', this.params._id));
-        this.wait(Meteor.subscribe('questioner', this.params._id));
+        //console.log("id ", this.params._id);
+        var pub = (this.params._id.length == publicIdLength);
+        if(pub) {
+            this.wait(Meteor.subscribe('answerer', this.params._id));
+        } else {
+            this.wait(Meteor.subscribe('questioner', this.params._id));
+        }
         if (!this.ready()) {
             this.render('loading');
             return
         }
-        var question = questions.findOne();
+        var question; 
         title.set(sitename + ' - '+ i18n('title_answer'));
-        description.set(question.question);
-        if(question.privateId){
+        if(!pub){
+            question = questions.findOne({privateId : this.params._id});
             this.render("questioner", {
                 data : {
                     answers : question.answers.reverse(),
@@ -160,18 +181,24 @@ if (Meteor.isClient) {
                 }
             });
         } else {
+            question = questions.findOne({publicId : this.params._id});
             var answers = Session.get("myanswers");
-            if(answers.indexOf(question.publicId) >= 0) {
+            var alreadyAnswered = (answers.indexOf(question.publicId) >= 0);
+            /*if(answers.indexOf(question.publicId) >= 0) {
                 answerState.set("done");
-            }
+            }*/
             this.render("answerer", { 
                 data : {
                     question : question.question,
+                    answers : question.answers,
                     publicId : question.publicId,
+                    alreadyAnswered : alreadyAnswered,
+                    //notYetAnswered : notYetAnswered,
                     answersArePublic : question.answersArePublic,
                 }
             });
         }
+        description.set(question.question);
     });
 
     // this lines has to be last lines in the file
@@ -228,6 +255,7 @@ if (Meteor.isClient) {
 }
 
 questions = new Mongo.Collection("questions");
+var publicIdLength = 6;
 if (Meteor.isServer) {
 
     Meteor.startup(function () {
@@ -245,12 +273,15 @@ if (Meteor.isServer) {
         Meteor.publish("myquestions", function(ids){
             return questions.find({privateId : {$in : ids}}, {fields : {privateId : 1, publicId : 1, answers : 1, question : 1}});
         });
+        Meteor.publish("myanswers", function(ids){
+            return questions.find({publicId : {$in : ids}}, {fields : {publicId : 1, question : 1}});
+        });
     });
     Meteor.methods({
         create : function(question, answersArePublic){
             var q = { 
                 question : question ,
-                publicId : Random.id(6),
+                publicId : Random.id(publicIdLength),
                 privateId : Random.id(),
                 answersArePublic : answersArePublic,
                 answers : []
