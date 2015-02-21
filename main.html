@@ -65,9 +65,10 @@
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1586015348309962&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-    <span class="font_20px">
+    
+    <div class="font_20px" style="line-height: 1.8; margin-bottom: 20px;">
         {{#i18n locale="en_US"}}
-            Now share the question to get replies<br>
+            <b>Now share the question to get replies</b><br>
             <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a><br>
             Copy the link
             <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
@@ -75,7 +76,8 @@
         {{#i18n locale="ru_RU"}}
             Повесить на стену: <span id="vk-share-button"></span>
         {{/i18n}}
-    </span>
+        <hr width="350px">
+    </div>
     <h1>{{question}}</h1>
     {{#if answers}}
         <ol reversed class="answers">
@@ -120,6 +122,7 @@
             {{#if answersArePublic}}
             <a href="/{{publicId}}/answers">{{i18n en_US='view results' ru_RU='посмотреть все ответы'}}</a>
             {{/if}}
+            <button>{{i18n en_US='Ask your question' ru_RU='Задать свой вопрос'}}</button>
         {{/case}}
         {{#case answerState="progress"}}
             progress
@@ -166,7 +169,7 @@ Viewing answers is not permitted
                 Nulla justo nulla, blandit ac dictum et, feugiat vel diam. Suspendisse non libero lacinia lectus molestie tincidunt eget vitae ipsum. Fusce sodales vel erat sed blandit.        
             </a> </li>
             <h3 class="comment">You didn't ask a question yet</h3>
-            <button type="submit">{{i18n en_US='Ask new question' ru_RU='Задать вопрос'}}</button>
+            <button>{{i18n en_US='Ask new question' ru_RU='Задать вопрос'}}</button>
         </div>
         <div>
             <h1>You answered</h1>

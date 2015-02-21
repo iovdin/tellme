@@ -58,6 +58,7 @@ if (Meteor.isClient) {
     
     Template.create.events({
         "submit form" : function(e){
+            console.log("submit question");
             e.preventDefault();
             var question = e.target.question.value;
             var answersArePublic = e.target.answersArePublic.checked;

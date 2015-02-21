@@ -47,7 +47,7 @@ div.center {
 
 div.child {
     margin: auto;
-    padding: 100px 0;
+    padding: 50px 0;
     width: 680px;
     text-align: center;
 }
@@ -83,6 +83,12 @@ h2 { font-size: 30px; }
     opacity: 0.5;
 }
 
+hr {
+    color: $lightgrey;
+    height: 1px;
+    opacity: 0.5;
+}
+
 .menu-icon {
     position: fixed;
     display: block;
@@ -114,7 +120,7 @@ h2 { font-size: 30px; }
     
     li {
         padding: 0;
-        margin: 30px 0;
+        margin: 35px 0;
         list-style-type: none;
     }
     
@@ -256,10 +262,12 @@ input[type=checkbox]:checked ~ label.checkbox {
     div.child {
         width: 360px;
         padding: 20px 0;
+        text-align: left;
     }
     
     .page {
         width: 360px;
+        text-align: left;
         
         > div {
             width: 360;
