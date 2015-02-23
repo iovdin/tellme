@@ -94,7 +94,7 @@ hr {
     display: block;
     width: 80px;
     height: 80px;
-    right: 20px;
+    right: 10px;
     top: 0;
     background-size: 40px auto;
     background-position: center;
@@ -240,7 +240,7 @@ input[type=checkbox]:checked ~ label.checkbox {
 }
 
 .fb-share-button {
-    margin-left: 40px;
+    //margin-left: 40px;
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -280,10 +280,6 @@ input[type=checkbox]:checked ~ label.checkbox {
     
     textarea {
         width: 350px;
-    }
-    
-    .menu-icon {
-        right: 0;
     }
     
     .answers{

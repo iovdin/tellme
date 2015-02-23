@@ -65,9 +65,8 @@
     
     <div class="font_20px" style="line-height: 1.8; margin-bottom: 20px;">
         {{#i18n locale="en_US"}}
-            <b>Now share the question to get replies</b><br>
+            <b style="font-weight: 400">Now share the question to get replies</b><br>
             <a href="{{publicUrl}}" class="font_20px">{{publicUrl}}</a><br>
-            Copy the link
             <div class="fb-share-button" data-href="{{publicUrl}}" data-layout="button"></div>
         {{/i18n}}
         {{#i18n locale="ru_RU"}}
@@ -102,14 +101,7 @@
             {{/if}}
         </div>
         <button type="submit" style="float: right">{{i18n en_US='Submit' ru_RU='Ответить'}}</button>
-        {{#if alreadyAnswered}}
-            <ol reversed class="answers">
-                {{#each answers}}
-                <li class="align_left"> {{ this }} </li>
-                {{/each}}
-            </ol>
-            <button class="ask_btn">{{i18n en_US='Ask your question' ru_RU='Задать свой вопрос'}}</button>
-        {{/if}}
+        <br>
         {{/case}}
         {{#case answerState="error"}}
             error
@@ -133,6 +125,14 @@
             progress
         {{/case}}
     </form>
+    {{#if alreadyAnswered}}
+            <ol reversed class="answers">
+                {{#each answers}}
+                <li class="align_left"> {{ this }} </li>
+                {{/each}}
+            </ol>
+            <button class="ask_btn">{{i18n en_US='Ask your question' ru_RU='Задать свой вопрос'}}</button>
+    {{/if}}
 </template>
 
 <template name="loading">
