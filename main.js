@@ -190,7 +190,7 @@ if (Meteor.isClient) {
             this.render("answerer", { 
                 data : {
                     question : question.question,
-                    answers : question.answers,
+                    answers : question.answers.reverse(),
                     publicId : question.publicId,
                     alreadyAnswered : alreadyAnswered,
                     //notYetAnswered : notYetAnswered,
